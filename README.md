@@ -1,2 +1,2 @@
 # Intern
-Files for DCRI work
+Learning about verification bias and the Begg and Greenes estimator through simulation
