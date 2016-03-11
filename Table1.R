@@ -157,5 +157,3 @@ sn_table
 sp_table
 
 
-
-

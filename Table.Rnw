@@ -6,7 +6,6 @@
 \maketitle
 
 \noindent Begg and Greenes sensitivity and specificty estimates for three phenotypes.
-Total verified cases were 565 out of 10,000.
 
 <<echo=FALSE>>=
 # Irwig Table 1 Code
@@ -30,7 +29,6 @@ library(trailR)
 ###########################################################################################
 
 #Compare
-R1 <- BGest(full,'r')
 r1 <- BeggAndGreeneTPFandFPFestimators(symptom_class="strata", #Variable that contains "symptom classes" mutually exclusive grouping
                                 dat=fuller,                     #Data that contains phenotypes and symptom_class variable
                                 sampVarName="sample",       #Variable that indicates sampled record
@@ -39,12 +37,32 @@ r1 <- BeggAndGreeneTPFandFPFestimators(symptom_class="strata", #Variable that co
                                 phiPrior=list("ALL NEGATIVE"=c(0,0), "ANY 1 TO 2"=c(0,0),"ALL POSITIVE"=c(0,0)),
                                 psiPrior=list("ALL NEGATIVE"=c(0,0),"ANY 1 TO 2"=c(0,0),"ALL POSITIVE"=c(0,0)),
                                 goldStandard="d" )             #Adjudicated variable name
+r2 <- BeggAndGreeneTPFandFPFestimators(symptom_class = 'strata',
+                                       dat=fuller,
+                                        sampVarName='sample',
+                                        testName=c('r2'),
+                                        estimate='TPF',
+                                        phiPrior=list("ALL NEGATIVE"=c(0,0), "ANY 1 TO 2"=c(0,0),"ALL POSITIVE"=c(0,0)),
+                                        psiPrior=list("ALL NEGATIVE"=c(0,0), "ANY 1 TO 2"=c(0,0),"ALL POSITIVE"=c(0,0)),
+                                        goldStandard="d")
+ r3 <- BeggAndGreeneTPFandFPFestimators(symptom_class = 'strata',
+                                        dat=fuller,
+                                        sampVarName='sample',
+                                        testName=c('r3'),
+                                        estimate='TPF',
+                                        phiPrior=list("ALL NEGATIVE"=c(0,0), "ANY 1 TO 2"=c(0,0),"ALL POSITIVE"=c(0,0)),
+                                        psiPrior=list("ALL NEGATIVE"=c(0,0), "ANY 1 TO 2"=c(0,0),"ALL POSITIVE"=c(0,0)),
+                                        goldStandard="d")
+r1$metric$summaryTable
+
+
 #Our sensitivity definition
 r1$metric$metric
-
-
-R2 <- BGest(full,'r2')
-R3 <- BGest(full,'r3')
+r2$metric$metric
+r3$metric$metric
+R1 <- BGest(fuller,'r')
+R2 <- BGest(fuller,'r2')
+R3 <- BGest(fuller,'r3')
 Actual <- c(0.7,0.99)
 
 table <- t(data.frame(R1,R2,R3,Actual, row.names = c('Sensitivity','Specificty')))

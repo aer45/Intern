@@ -173,6 +173,16 @@ BGest <- function(sample,x){
   return(c(sen_est,spes_est))
 }
 
+
+BGest2 <- function(sample,x){
+  pr1 <- sum(sample[x]==1)/dim(sample)[1]
+  sub <- subset(sample, d!='NA')
+  phi1 <- sum(sub['d']==1&sub[x]==1)/sum(sub[x]==1)
+  psi1 <- sum(sub['d']==1&sub[x]==0)/sum(sub[x]==0)
+  lor <- log(pr1*phi1)-log((1-pr1)*psi1)
+  return(exp(lor)/(1+exp(lor)))
+}
+
 R1 <- BGest(full,'r')
 R2 <- BGest(full,'r2')
 R3 <- BGest(full,'r3')
